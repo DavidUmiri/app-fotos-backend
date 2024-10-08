@@ -7,9 +7,15 @@ const cors = require("cors");
 // Inicializar la aplicacion Express
 const app = express();
 
+// Lista de origines permitidos
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://app-fotos-frontend.vercel.app'
+]
+
 // Permitir solo solicitudes de localhost:3000
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: allowedOrigins,
 }));
 
 // Middleware para manejar JSON
