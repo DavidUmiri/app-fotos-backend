@@ -27,7 +27,7 @@ app.use(helmet());
 // Configurar limitación de tasa de solicitudes
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutos
-    max: 100, // Limite de 100 solicitudes por IP
+    max: 50, // Limite de 100 solicitudes por IP
     message: "Demasiadas solicitudes desde esta IP, por favor intente de nuevo después de 15 minutos"
 });
 app.use(limiter);
