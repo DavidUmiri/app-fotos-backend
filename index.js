@@ -3,6 +3,8 @@ const express = require("express");
 const axios = require("axios");
 require("dotenv").config();
 const cors = require("cors");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 // Inicializar la aplicacion Express
 const app = express();
@@ -18,8 +20,17 @@ app.use(cors({
     origin: allowedOrigins,
 }));
 
-// Middleware para manejar JSON
+// Middleware para manejar JSON y seguridad
 app.use(express.json());
+app.use(helmet());
+
+// Configurar limitación de tasa de solicitudes
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutos
+    max: 100, // Limite de 100 solicitudes por IP
+    message: "Demasiadas solicitudes desde esta IP, por favor intente de nuevo después de 15 minutos"
+});
+app.use(limiter);
 
 // Ruta de prueba para ver si el servidor esta corriendo
 app.get("/", (req, res) => {
